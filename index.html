@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星尘博客 - 持续迭代的开发者，终身学习者</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0f172a',
+                        neonBlue: '#38bdf8',
+                        neonPurple: '#a855f7',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-gradient {
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+            .card-hover:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 20px 25px -5px rgba(56, 189, 248, 0.1), 0 10px 10px -5px rgba(168, 85, 247, 0.1);
+            }
+        }
+    </style>
+</head>
+<body class="bg-dark text-gray-200 font-light min-h-screen">
+    <!-- 背景下雨动画 -->
+    <canvas id="rainCanvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0 opacity-60"></canvas>
+
+    <!-- 导航栏 -->
+    <nav class="fixed z-50 top-0 left-0 w-full lg:w-64 h-16 lg:h-full bg-dark/90 backdrop-blur-md border-b lg:border-r border-gray-800 px-4 lg:px-6">
+        <div class="h-full flex lg:flex-col items-center justify-between lg:justify-start py-4">
+            <div class="text-2xl font-bold mb-0 lg:mb-12 bg-gradient-to-r from-neonBlue to-neonPurple text-gradient">
+                星尘博客
+            </div>
+            <ul class="flex lg:flex-row lg:flex-col gap-2 lg:gap-6">
+                <li class="nav-item active">
+                    <a href="#home" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:text-neonBlue transition-colors">
+                        <i class="fa fa-home w-5 text-center"></i>
+                        <span class="hidden lg:inline">首页</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#articles" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:text-neonBlue transition-colors">
+                        <i class="fa fa-list w-5 text-center"></i>
+                        <span class="hidden lg:inline">文章列表</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:text-neonBlue transition-colors">
+                        <i class="fa fa-user w-5 text-center"></i>
+                        <span class="hidden lg:inline">关于我</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#friends" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:text-neonBlue transition-colors">
+                        <i class="fa fa-link w-5 text-center"></i>
+                        <span class="hidden lg:inline">友链</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#tools" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:text-neonBlue transition-colors">
+                        <i class="fa fa-wrench w-5 text-center"></i>
+                        <span class="hidden lg:inline">资源工具</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主内容 -->
+    <main class="pt-20 lg:pt-0 lg:ml-64 px-4 md:px-8 lg:px-12 pb-20 relative z-10">
+        <!-- 首页 -->
+        <section id="home" class="page-section block">
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-12 text-center">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-neonBlue to-neonPurple text-gradient">
+                        你好，我是星尘
+                    </h1>
+                    <p class="text-xl text-gray-300">持续迭代的开发者 | 终身学习者</p>
+                </div>
+
+                <!-- 博客卡片网格 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- 卡片一：技术随笔 -->
+                    <a href="#tech-notes" class="block bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6 card-hover">
+                        <div class="text-neonBlue text-3xl mb-4">
+                            <i class="fa fa-code"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-white">技术随笔</h3>
+                        <p class="text-gray-400 text-sm mb-3">记录编码路上的每一次调试与复盘</p>
+                        <p class="text-gray-300 mb-4 text-sm leading-relaxed">
+                            深耕前端开发、原生JS、React框架、数据可视化与全栈部署实战。记录日常开发中遇到的跨域问题、兼容性适配、UI像素级优化、代码重构与逻辑纠错。拒绝碎片化收藏，把每一次报错、每一次踩坑，沉淀成可复用的解决方案与标准化开发经验。
+                        </p>
+                        <p class="text-neonPurple font-medium italic">以代码落笔，以复盘成长</p>
+                    </a>
+
+                    <!-- 卡片二：学习归档 -->
+                    <a href="#learning" class="block bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6 card-hover">
+                        <div class="text-neonBlue text-3xl mb-4">
+                            <i class="fa fa-book"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-white">学习归档</h3>
+                        <p class="text-gray-400 text-sm mb-3">搭建属于自己的系统化知识体系</p>
+                        <p class="text-gray-300 mb-4 text-sm leading-relaxed">
+                            从零梳理计算机基础知识、网络原理、数据库SQL、嵌入式底层逻辑与数据处理思维。摒弃碎片化学习方式，通过笔记归纳、流程图梳理、源码解析、项目实操，将零散知识点串联成完整知识框架，持续更新、持续迭代、持续精进。
+                        </p>
+                        <p class="text-neonPurple font-medium italic">日日积累，步步深耕</p>
+                    </a>
+
+                    <!-- 卡片三：项目作品 -->
+                    <a href="#projects" class="block bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6 card-hover">
+                        <div class="text-neonBlue text-3xl mb-4">
+                            <i class="fa fa-briefcase"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-white">项目作品</h3>
+                        <p class="text-gray-400 text-sm mb-3">用实战项目落地所有技术学习</p>
+                        <p class="text-gray-300 mb-4 text-sm leading-relaxed">
+                            收录个人独立开发的完整项目：前端官网复刻、可视化大屏ECharts实践、AI交互小游戏、Python数据爬虫、STM32嵌入式智能硬件项目、数据库部署与网页托管实战。所有项目均包含完整思路、源码注释、踩坑记录与部署教程，真实还原从0到1的开发全过程。
+                        </p>
+                        <p class="text-neonPurple font-medium italic">知行合一，作品为证</p>
+                    </a>
+
+                    <!-- 卡片四：数据思维 -->
+                    <a href="#data-thinking" class="block bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6 card-hover">
+                        <div class="text-neonBlue text-3xl mb-4">
+                            <i class="fa fa-chart-line"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-white">数据思维</h3>
+                        <p class="text-gray-400 text-sm mb-3">让数据说话，用逻辑解决问题</p>
+                        <p class="text-gray-300 mb-4 text-sm leading-relaxed">
+                            专注数据清洗、台账分析、四象限建模、大数据处理与可视化图表制作。结合真实业务场景，学习数据归类、统计分析、趋势总结与问题复盘，将数据能力融入开发、工作与日常复盘，培养严谨的逻辑思维与落地能力。
+                        </p>
+                        <p class="text-neonPurple font-medium italic">精准分析，理性输出</p>
+                    </a>
+
+                    <!-- 卡片五：资源工具箱 -->
+                    <a href="#tools" class="block bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6 card-hover">
+                        <div class="text-neonBlue text-3xl mb-4">
+                            <i class="fa fa-toolbox"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-white">资源工具箱</h3>
+                        <p class="text-gray-400 text-sm mb-3">收纳高效工具，告别重复造轮子</p>
+                        <p class="text-gray-300 mb-4 text-sm leading-relaxed">
+                            整理全网优质免费开发资源、前端模板、调试工具、仿真软件、代码片段、部署教程与学习资料。筛选实测可用、无冗余、高适配的干货内容，统一归档分类，方便随时查阅复用，大幅提升学习与开发效率。
+                        </p>
+                        <p class="text-neonPurple font-medium italic">善用工具，高效成长</p>
+                    </a>
+
+                    <!-- 卡片六：关于本站 -->
+                    <a href="#about" class="block bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6 card-hover">
+                        <div class="text-neonBlue text-3xl mb-4">
+                            <i class="fa fa-info-circle"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-white">关于本站</h3>
+                        <p class="text-gray-400 text-sm mb-3">持续迭代的开发者，终身学习者</p>
+                        <p class="text-gray-300 mb-4 text-sm leading-relaxed">
+                            电子信息工程应届开发者，深耕前端全栈、嵌入式硬件、数据可视化与Python开发。热爱开源、喜欢折腾、擅长从零搭建项目与解决底层逻辑问题。搭建本博客旨在记录学习、沉淀技术、分享干货、复盘成长，希望在不断输出中，成为更专业、更自律、更有内核的技术人。
+                        </p>
+                        <p class="text-neonPurple font-medium italic">保持热爱，持续迭代</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 文章列表页 -->
+        <section id="articles" class="page-section hidden">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold mb-8 text-white">文章列表</h2>
+                <div class="space-y-4">
+                    <div class="bg-gray-800/50 border border-gray-700 rounded-lg p-4 card-hover">
+                        <h3 class="text-xl font-bold text-neonBlue mb-2">React Hooks 性能优化的10个实践技巧</h3>
+                        <p class="text-gray-400 text-sm mb-2">2024-03-15 · 前端开发</p>
+                        <p class="text-gray-300">深入探讨useCallback、useMemo等Hooks的正确使用场景，避免不必要的重渲染，提升React应用性能。</p>
+                    </div>
+                    <div class="bg-gray-800/50 border border-gray-700 rounded-lg p-4 card-hover">
+                        <h3 class="text-xl font-bold text-neonBlue mb-2">Canvas 实现可视化大屏的适配方案</h3>
+                        <p class="text-gray-400 text-sm mb-2">2024-02-28 · 数据可视化</p>
+                        <p class="text-gray-300">总结不同分辨率下大屏适配的3种方案，解决拉伸、模糊、错位等常见问题，兼容各种显示设备。</p>
+                    </div>
+                    <div class="bg-gray-800/50 border border-gray-700 rounded-lg p-4 card-hover">
+                        <h3 class="text-xl font-bold text-neonBlue mb-2">STM32 实现温湿度数据采集与上传</h3>
+                        <p class="text-gray-400 text-sm mb-2">2024-02-10 · 嵌入式开发</p>
+                        <p class="text-gray-300">从硬件接线、驱动编写到MQTT协议数据上传，完整实现物联网设备的数据采集全流程。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 关于我页面 -->
+        <section id="about" class="page-section hidden">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-3xl font-bold mb-8 text-white">关于我</h2>
+                <div class="bg-gray-800/50 border border-gray-700 rounded-xl p-8">
+                    <div class="flex flex-col md:flex-row gap-8 mb-8">
+                        <div class="w-32 h-32 rounded-full bg-gradient-to-r from-neonBlue to-neonPurple flex items-center justify-center text-5xl text-white">
+                            <i class="fa fa-user"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-2">星尘</h3>
+                            <p class="text-gray-300 mb-4">电子信息工程应届毕业生 | 全栈开发爱好者 | 终身学习者</p>
+                            <p class="text-gray-300 leading-relaxed mb-4">
+                                热爱技术，喜欢折腾，擅长前端开发、数据可视化、嵌入式硬件开发，具备从硬件到前端的全链路项目开发能力。
+                            </p>
+                            <div class="flex gap-3 text-2xl">
+                                <a href="#" class="text-gray-400 hover:text-neonBlue transition-colors"><i class="fa fa-github"></i></a>
+                                <a href="#" class="text-gray-400 hover:text-neonBlue transition-colors"><i class="fa fa-csdn"></i></a>
+                                <a href="#" class="text-gray-400 hover:text-neonBlue transition-colors"><i class="fa fa-envelope"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="text-xl font-bold mb-4 text-white">技能栈</h4>
+                    <div class="flex flex-wrap gap-2 mb-8">
+                        <span class="px-3 py-1 bg-neonBlue/20 text-neonBlue rounded-full text-sm">HTML/CSS</span>
+                        <span class="px-3 py-1 bg-neonBlue/20 text-neonBlue rounded-full text-sm">JavaScript</span>
+                        <span class="px-3 py-1 bg-neonBlue/20 text-neonBlue rounded-full text-sm">React</span>
+                        <span class="px-3 py-1 bg-neonBlue/20 text-neonBlue rounded-full text-sm">Vue</span>
+                        <span class="px-3 py-1 bg-neonBlue/20 text-neonBlue rounded-full text-sm">ECharts</span>
+                        <span class="px-3 py-1 bg-neonPurple/20 text-neonPurple rounded-full text-sm">Python</span>
+                        <span class="px-3 py-1 bg-neonPurple/20 text-neonPurple rounded-full text-sm">Node.js</span>
+                        <span class="px-3 py-1 bg-neonPurple/20 text-neonPurple rounded-full text-sm">MySQL</span>
